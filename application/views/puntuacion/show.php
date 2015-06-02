@@ -53,18 +53,18 @@
                 <tr>
                     <input type="hidden" name= "id_colegio" value='<?= $colegio->id_colegio ?>'></input>
                    
-                    <p  class="para"><h3 >Valoraci&oacute;n general del colegio</h3></p>
+                    <p  class="para"><h3 >Calidad de profesores</h3></p>
                      <span class="starRating">
-                      <input id="val_general5" type="radio" name="val_general" value="5">
-                      <label for="val_general5">5</label>
-                      <input id="val_general4" type="radio" name="val_general" value="4">
-                      <label for="val_general4">4</label>
-                      <input id="val_general3" type="radio" name="val_general" value="3" checked>
-                      <label for="val_general3">3</label>
-                      <input id="val_general2" type="radio" name="val_general" value="2">
-                      <label for="val_general2">2</label>
-                      <input id="val_general1" type="radio" name="val_general" value="1">
-                      <label for="val_general1">1</label>
+                      <input id="val_profel5" type="radio" name="val_profe" value="5">
+                      <label for="val_profel5">5</label>
+                      <input id="val_profel4" type="radio" name="val_profe" value="4">
+                      <label for="val_profel4">4</label>
+                      <input id="val_profel3" type="radio" name="val_profe" value="3" >
+                      <label for="val_profel3">3</label>
+                      <input id="val_profel2" type="radio" name="val_profe" value="2">
+                      <label for="val_profel2">2</label>
+                      <input id="val_profel1" type="radio" name="val_profe" value="1">
+                      <label for="val_profel1">1</label>
                     </span>
                     <p  class="para"><h3 >Calidad de enseñanza</h3></p>
                      <span class="starRating">
@@ -72,7 +72,7 @@
                       <label for="val_ense5">5</label>
                       <input id="val_ense4" type="radio" name="val_ense" value="4">
                       <label for="val_ense4">4</label>
-                      <input id="val_ense3" type="radio" name="val_ense" value="3" checked>
+                      <input id="val_ense3" type="radio" name="val_ense" value="3" >
                       <label for="val_ense3">3</label>
                       <input id="val_ense2" type="radio" name="val_ense" value="2">
                       <label for="val_ense2">2</label>
@@ -85,7 +85,7 @@
                       <label for="val_infra5">5</label>
                       <input id="val_infra4" type="radio" name="val_infra" value="4">
                       <label for="val_infra4">4</label>
-                      <input id="val_infra3" type="radio" name="val_infra" value="3" checked>
+                      <input id="val_infra3" type="radio" name="val_infra" value="3" >
                       <label for="val_infra3">3</label>
                       <input id="val_infra2" type="radio" name="val_infra" value="2">
                       <label for="val_infra2">2</label>
@@ -98,13 +98,16 @@
                       <label for="val_ubi5">5</label>
                       <input id="val_ubi4" type="radio" name="val_ubi" value="4">
                       <label for="val_ubi4">4</label>
-                      <input id="val_ubi3" type="radio" name="val_ubi" value="3" checked>
+                      <input id="val_ubi3" type="radio" name="val_ubi" value="3">
                       <label for="val_ubi3">3</label>
                       <input id="val_ubi2" type="radio" name="val_ubi" value="2">
                       <label for="val_ubi2">2</label>
                       <input id="val_ubi1" type="radio" name="val_ubi" value="1">
                       <label for="val_ubi1">1</label>
                     </span>
+
+                    
+
                     <p  class="para"><h3 >Define tu perfil</h3></p>
                     <div class="identificar">
                         <input id="rbFamilia" type="radio" name="perfil" value="apoderado"><label for="rbFamilia"><h4>Apoderado</h4></label>
@@ -171,7 +174,15 @@
                               <div class="panel panel-default arrow left">
                                 <div class="panel-body">
                                   <header class="text-left">
-                                    <div class="comment-user"><i class="fa fa-graduation-cap fa-2x"></i></i> <font size=4><strong>Nota Valoracion general: <?= $comentario->val_general ?>/5</strong></font></div>
+                                    <div class="comment-user"><i class="fa fa-graduation-cap fa-2x"></i></i> <font size=4>
+                                    <?php if ($comentario->val_promedio < 3) {
+                                     ?>
+                                    
+                                    <strong style="color:red">Nota Valoracion general: <?= $comentario->val_promedio ?>/5 Estrellas</strong></font>
+                                    <?php }else{ ?>
+                                      <strong>Nota Valoracion general: <?= $comentario->val_promedio ?>/5 Estrellas</strong></font>
+                                  <?php } ?>
+                                    </div>
                                   </header>
                                   <div class="comment-post">
                                     <p>

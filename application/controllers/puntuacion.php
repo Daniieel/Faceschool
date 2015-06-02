@@ -46,22 +46,27 @@ class Puntuacion  extends CI_Controller
 
 	public function agregar_puntuacion() //agregar un datos de un colegio
 	{
-		
+		$val_profe = (int) $this->input->post('val_profe');
+		$val_ense =  (int) $this->input->post('val_ense');
+		$val_infra =  (int) $this->input->post('val_infra');
+		$val_ubi =  (int) $this->input->post('val_ubi');
 
+		$val_promedio = ($val_profe + $val_ense + $val_infra + $val_ubi ) 	/4;
 		//guardo en un array todos los datos que insertaron en el formulario anterior
 		$colegio = array(
 			'id_colegio' => $this->input->post('id_colegio'),
-			'val_general' => $this->input->post('val_general'), //con el name de cada input obtengo los valores de cada uno
+			'val_profe' => $this->input->post('val_profe'), //con el name de cada input obtengo los valores de cada uno
 			'val_ense' => $this->input->post('val_ense'),
 			'val_infra' => $this->input->post('val_infra'),
 			'val_ubi' => $this->input->post('val_ubi'),
+			'val_promedio' => $val_promedio,
 			'perfil' => $this->input->post('perfil'),
 			'nombre' => $this->input->post('nombre'),
 			'comentario' => $this->input->post('comentario'),
 			'terminos' => $this->input->post('terminos'),
 						
 			);
-	
+		
 
 		$this->load->model("colegio_model","uum"); //cargo la base de datos
 		$this->uum->agregar_puntuacion($colegio); //agrego el colegio asignado 
