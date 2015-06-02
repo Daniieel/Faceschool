@@ -152,7 +152,57 @@ class Colegio_model extends CI_Model {
 			return FALSE;
 		}
 	}
+	function get_colegio_from_recomendation($val_profe,$val_ense,$val_infra, $val_ubi)
+	{
+		$query = "SELECT  a.id_colegio as id_colegio
+						   ,avg(a.val_profe) as prom_val_profe
+						   ,avg(a.val_ense) as prom_val_ense
+						   ,avg(a.val_infra) as prom_val_infra
+						   ,avg(a.val_ubi) as prom_val_ubi
+						   ,(avg(a.val_profe) + avg(a.val_ense) + avg(a.val_infra) + avg(a.val_ubi))*0.7 as suma_prom
+						   ,b.nombre as nombre
+						   ,b.direccion as direccion
+						   ,b.foto as foto
+						   
+						   FROM estrellas a
+						   LEFT JOIN colegio b
+						   on a.id_colegio = b.id_colegio
+						   
+						   ";
+		$band = 0;
+		/*$query = "Select 
+						c.nombre
+						, c.direccion
+						, c.foto 
+						, avg(e.val_profe) as prom_val_profe
+				  		From colegio c
+						LEFT JOIN estrellas e  
+						on c.id_colegio = e.id_colegio 
+						where val_profe <= '$val_profe'";*/
+		if ($val_profe) {
+			if ( $band==0) {
+				$query = $query."WHERE  (select avg(val_profe) from estrellas) <='$val_profe' ";
+			 	$band = 1;
+			 }elseif( $band== 1){
+			 	$query = $query."and   (select avg(val_profe) from estrellas) <='$val_profe' ";
+			 }	
+		}
 
+		if ($val_ense) {
+			if ($band==0) {
+				$query = $query."WHERE (select avg(val_ense) from estrellas) <='$val_ense' ";
+			 	$band = 1;
+			 }elseif( $band== 1){
+			 	$query = $query."and  (select avg(val_ense) from estrellas) <='$val_ense' ";
+			 }	
+		}
+		
+
+		$query = $query."group by a.id_colegio order by prom_val_profe DESC";
+
+		$query = $this->db->query($query);
+		return $query->result();		
+	}
 	function get_megusta()
 	{
 		$query = $this->db->query(

@@ -11,11 +11,7 @@
 <div class="page-header">
         <div class = "col-md-12">
 
-            
-           
-                
-
-            <table width="200" border="5" class = "table table-striped" >
+  <table width="200" border="5" class = "table table-striped" >
             <tr>
             <th><h5 >Imagen Referencial:</h5></th>
         
@@ -161,7 +157,7 @@
                         ?>
                         <?php if ( $comentario->id_colegio ==  $colegio->id_colegio && $comentario->comentario!=NULL) {
                         ?>
-
+                          <!--<h1><?php var_dump($colegios) ?>slsdfkl</h1>-->
                           <article class="row">
                             <div class="col-md-2 col-sm-2 hidden-xs">
                               <figure class="thumbnail">
