@@ -3,17 +3,220 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="<?= base_url(); ?>js/star-rating.js" type="text/javascript"></script>
 <link rel="stylesheet" href="<?= base_url(); ?>css/stylesheet.css">
-<div class="col-md-10 col-md-offset-1">
-	
+ <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+ <script type="text/javascript" title="Geo" ></script>
+ <script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+
+      <script>
+      var map;
+      var myPos;
+      var directionsRenderer;
+      var directionsService = new google.maps.DirectionsService();
+      var directionsDisplay = new google.maps.DirectionsRenderer();
+      var markers = [];
+      var colegios = [];
+      var circle = "";
+      var myPos = null;
+      var destination = "";
+      if (navigator && navigator.geolocation) {
+         navigator.geolocation.getCurrentPosition(geoOK, geoKO);
+      } else {
+         geoMaxmind();
+      }
+
+      //-----------------
+
+
+      function initialize(){      
+        
+        var mapOptions = {
+          zoom: 12,   
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        
+        map = new google.maps.Map(document.getElementById('mapa'), mapOptions);
+        
+        var directionsDisplay = new google.maps.DirectionsRenderer();
+        
+        // Indicamos dónde esta el mapa para renderizarnos
+        directionsDisplay.setMap(map);
+        // Indicamos dónde esta el panel para mostrar el texto
+        directionsDisplay.setPanel(document.getElementById("directionsPanel"));
+        
+      } 
+
+      google.maps.event.addDomListener(window, 'load', initialize);
+
+      //---------------
+      function calcular_ruta(){
+      var end = "";
+      colegios.forEach(function(cole){
+        if (cole.id == parseInt($('#colegio').val())) {
+          end = cole.latitud+","+cole.longitud;
+        };
+      });
+       var start = myPos;
+         var request = {
+             origin:start,
+             destination:end,
+             travelMode: google.maps.TravelMode.DRIVING
+         };
+         directionsService.route(request, function(response, status) {
+           if (status == google.maps.DirectionsStatus.OK) {
+             directionsDisplay.setDirections(response);
+           }
+         });
+         directionsDisplay.setMap(map);
+         directionsDisplay.setPanel(document.getElementById("directionsPanel"));
+      }
+
+      function geoOK(position) {
+      showMap(position.coords.latitude, position.coords.longitude);
+
+      //agrega marcador del colegio
+      //carga los marcadores del mapa con los colegios de la base de datos
+      <?php foreach ($colegios as $colegio2){ ?>
+      <?php foreach ($colegios_mapa as $colegio_mapa) { ?>
+      	<?php if( $colegio_mapa->id_colegio ==  $colegio2->id_colegio  ){ ?>
+      	
+      var place<?= $colegio_mapa->id_colegio ?> = new google.maps.LatLng(<?= $colegio_mapa->latitud ?>,<?= $colegio_mapa->longitud ?>);
+      var marke = new google.maps.Marker({
+                position: place<?= $colegio_mapa->id_colegio ?>
+              , title: "<?= $colegio_mapa->nombre ?>"
+              , icon: 'http://i.imgur.com/Vw20Fx3.png'
+              , map: map
+              , });
+      var cole = {id:<?= $colegio_mapa->id_colegio?> , latitud:"<?= $colegio_mapa->latitud ?>", longitud:"<?= $colegio_mapa->longitud?>"};
+      colegios.push(cole);
+       markers.push(marke);
+       
+      <?php } ?>
+     // <?php } ?>
+      //<?php } ?>
+
+      }
+      function geoMaxmind() {
+      showMap(geoip_latitude(), geoip_longitude());
+      }
+
+      function geoKO(err) {
+      if (err.code == 1) {
+      error('El usuario ha denegado el permiso para obtener informacion de ubicacion.');
+      } else if (err.code == 2) {
+      error('Tu ubicacion no se puede determinar.');
+      } else if (err.code == 3) {
+      error('TimeOut.')
+      } else {
+      error('No sabemos que pasó pero ocurrio un error.');
+      }
+      }
+
+      function showMap(lat, longi, radius) {
+
+      myPos = new google.maps.LatLng(lat,longi);
+
+      var myOptions = {
+        zoom: 14,
+        center: myPos,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+
+      }
+
+      map = new google.maps.Map(document.getElementById("mapa"), myOptions);
+
+
+      var marker = new google.maps.Marker({
+          position: myPos,
+          title:"Tu Ubicacion",
+          draggable:false,
+          icon: 'https://dl.dropboxusercontent.com/u/20056281/Iconos/male-2.png',
+          animation: google.maps.Animation.BOUNCE
+      });
+
+
+
+      marker.setMap(map);
+
+
+      // Agregar circulo al mapa
+      circle = new google.maps.Circle({
+        map: map,
+        radius: 0,    // 10 miles in metres
+        fillColor: '#819FF7',
+        strokeColor: '#2E9AFE'
+      });
+      circle.bindTo('center', marker, 'position');
+
+      directionsRenderer = new google.maps.DirectionsRenderer();
+      directionsRenderer.setMap(map);
+
+
+
+      }
+//---------------------------------------------------
+
+      function travelToAddress(){
+       var colegioActual = document.forms[0].colegio.value;
+       var LocalLatLong;
+        if(colegioActual == -1){
+          return;
+        }
+      <?php foreach ($colegios as $colegio) { ?> 
+         else if( <?= $colegio->id_colegio ?> == colegioActual){
+           LocalLatLong =  '<?= $colegio->latitud ?>,<?= $colegio->longitud ?>';
+         }
+      <?php } ?>
+
+
+        //Obtenemos la direccion
+        //destino=document.forms[0].address.value;
+        destino = LocalLatLong;
+        directionsService = new google.maps.DirectionsService();
+        // opciones de busqueda
+        var request = {
+          origin: myPos,
+          destination: destino,
+          travelMode: google.maps.DirectionsTravelMode.DRIVING
+        };
+        directionsService.route(request,getRuta);
+      }
+
+//--------------------------------------------------------
+      function getRuta(result, status){
+
+          if (status == google.maps.DirectionsStatus.OK) {
+             directionsRenderer.setDirections(result);
+          } else {
+             error("Ha ocurrido un error debido a : " + status);
+          }
+      }
+      function error(msg) {
+      alert(msg);
+      }
+      function onGDirectionsLoad(){ 
+            //resumen de tiempo y distancia
+            document.getElementById("getDistance").innerHTML =gdir.getSummaryHtml(); 
+      }
+      function procesaClick() {
+          alert("Marcador: " + this.title + ", ID: " + this.idColegio);
+      }
+
+
+
+      </script>
+
+<div class="col-md-4 col-md-offset-1">
+	<form action= "<?= base_url('recomendador/show_2'); ?>" method="get" >
 	<br>
 	<h2>Selecciona los criterios </h2>
 	<h4>
 	<br>
-	<div class="col-md-4 col-md-offset-0">
+	<div class="col-md-10">
 			<table class="table table-hover">
 		  		<tr>
 		  			<td>
-		  				<input  type="checkbox" name="option1" value="val_profe">Calidad de profesores  
+		  				Calidad de profesores  
 		  			</td>
 		  			<td>
 		  				 
@@ -34,7 +237,7 @@
 		  		</tr>
 		  		<tr>
 		  			<td>
-		  				<input type="checkbox" name="option1" value="val_profe">Calidad de enseñanza 
+		  				Calidad de enseñanza 
 		  			</td>
 		  			<td>
 		  				<span class="starRating">
@@ -54,7 +257,7 @@
 		  		</tr>
 		  		<tr>
 		  			<td>
-		  				<input type="checkbox" name="option3" value="val_infra">Infraestructura 
+		  				Infraestructura 
 		  			</td>
 		  			<td>
 		  				<span class="starRating">
@@ -74,7 +277,7 @@
 		  		</tr>
 		  		<tr>
 		  			<td>
-		  				<input type="checkbox" name="option4" value="val_ubi"> Ubicacion
+		  				Ubicacion
 		  			</td>
 		  			<td>
 		  				<span class="starRating">
@@ -94,14 +297,54 @@
 		  		</tr>
 			</table>
 			<button type="submit" class="btn btn-default">Buscar</button>
+
+			
+			<div id="mapa" style="width:100%; height:470px; border: 2px solid black;  position: center; overflow: hidden"></div>
+        	
+        	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        	  <div class="panel panel-default">
+        	  <?php foreach ($colegios as $colegio ) {?>
+        	    <div class="panel-heading" role="tab" id="heading<?= $colegio->id_colegio  ?>">
+        	      <h4 class="panel-title">
+
+        	        <a onclick="calcular_ruta();" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<?= $colegio->id_colegio  ?>" aria-expanded="true" aria-controls="collapse<?= $colegio->id_colegio  ?>">
+        	          <?= $colegio->nombre  ?>
+        	        </a>
+        	      </h4>
+        	    </div>
+        	    <div id="collapse<?= $colegio->id_colegio  ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<?= $colegio->id_colegio  ?>">
+        	      <div class="panel-body">
+        	      <select  style="visibility:hidden" name="colegio" class="form-control" id="colegio">
+
+        	                    <option value="<?= $colegio->id_colegio ?>"><?= $colegio->nombre ?></option>
+                  </select> 
+        	      </div>
+        	      <div class="form-group">
+        	          <div id="directionsPanel" style="width: 100%;float:right;"></div>
+        	      </div>
+        	      </div>
+        	    </div>
+        	   <?php } ?>
+        	  </div>
+        	   
+        	</div>
+        	</div>
+			
 	</div>
-	
-	<div class="col-md-8 col-md-offset-0">
+	</form>
+	<div class="col-md-7 ">
+
 		
-		<?php foreach ($colegios as $colegio) {?>
+
+		
+		<?php foreach ($colegios as $colegio ) {?>
+		<form action= "<?= base_url('colegio/show'); ?>" method="get" target="_blank" >	
+
+		
+		 
 
 		<div class="well">
-			<form action= "<?= base_url('colegio/show'); ?>" method="get" target="_blank" >
+				
 				<div class="list-group" >
 			          <a href="#" class="list-group-item">
 			                <div class="media col-md-8">
@@ -112,14 +355,14 @@
 			                <div class="col-md-6">
 			                    <h4 class="list-group-item-heading"><?= $colegio->nombre  ?> </h4>
 			                    <p class="list-group-item-text"><?= $colegio->direccion  ?> </p>
+			                    
 			                </div>
 			                <div class="col-md-3 pull-right">
 
-			                	<h2><?= $colegio->suma_prom  ?> <small> Promedio </small></h2>
-			                    <h2><?= $colegio->prom_val_profe  ?> <small> Promedio val_profe</small></h2>
-			                    <h2><?= $colegio->prom_val_ense ?> <small> Promedio val_ense</small></h2>
-			                    <h2><?= $colegio->prom_val_infra  ?> <small> Promedio val_infra</small></h2>
-			                    <h2><?= $colegio->prom_val_ubi ?> <small> Promedio val_ubi</small></h2>
+			                	<h2><?= $colegio->suma_total ?> <small> total </small></h2>
+
+										                    
+			                     <input type="hidden" name= "colegio" value='<?= $colegio->id_colegio ?>'></input>
 			                     <input type="submit" value="Ver Informacion" class="btn btn-danger" id="informacion">
 			                    	                    
 			                   
@@ -128,6 +371,8 @@
 			          
 			        </div>
 		</div>
+		
+		
 		<?php } ?>
 	</div>
 	

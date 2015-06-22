@@ -152,57 +152,48 @@ class Colegio_model extends CI_Model {
 			return FALSE;
 		}
 	}
-	function get_colegio_from_recomendation($val_profe,$val_ense,$val_infra, $val_ubi)
+	function get_colegio_from_recomendation($val_profe,$val_ense,$val_infra, $val_ubi, $val_porcent_profe, $val_porcent_ense, $val_porcent_infra, $val_porcent_ubi)
 	{
 		$query = "SELECT  a.id_colegio as id_colegio
-						   ,avg(a.val_profe) as prom_val_profe
-						   ,avg(a.val_ense) as prom_val_ense
-						   ,avg(a.val_infra) as prom_val_infra
-						   ,avg(a.val_ubi) as prom_val_ubi
-						   ,(avg(a.val_profe) + avg(a.val_ense) + avg(a.val_infra) + avg(a.val_ubi))*0.7 as suma_prom
+							,b.latitud 
+							,b.longitud
+						   ,avg(a.val_profe)*$val_porcent_profe as prom_val_profe
+						   ,avg(a.val_ense) * $val_porcent_ense as prom_val_ense
+						   ,avg(a.val_infra) * $val_porcent_infra as prom_val_infra
+						   ,avg(a.val_ubi) * $val_porcent_ubi as prom_val_ubi
+						   ,avg(a.val_profe) + avg(a.val_ense) + avg(a.val_infra) + avg(a.val_ubi) as sum_prom
+						   ,(avg(a.val_profe)*$val_porcent_profe + avg(a.val_ense) * $val_porcent_ense + avg(a.val_infra) * $val_porcent_infra + avg(a.val_ubi) * $val_porcent_ubi)*0.8 as sum_prom_mult
 						   ,b.nombre as nombre
 						   ,b.direccion as direccion
 						   ,b.foto as foto
-						   
+						   ,(SELECT count(id_colegio) FROM me_gusta c WHERE c.id_colegio = a.id_colegio)*0.2 as contador_megusta
+						   ,ROUND(((SELECT count(id_colegio) FROM me_gusta c WHERE c.id_colegio = a.id_colegio)*0.2) + ((avg(a.val_profe)*$val_porcent_profe + avg(a.val_ense) * $val_porcent_ense + avg(a.val_infra) * $val_porcent_infra + avg(a.val_ubi) * $val_porcent_ubi)*0.8),2) as suma_total
 						   FROM estrellas a
 						   LEFT JOIN colegio b
 						   on a.id_colegio = b.id_colegio
-						   
+						   group by a.id_colegio 
+						   order by suma_total DESC
+						   LIMIT 5
 						   ";
-		$band = 0;
-		/*$query = "Select 
-						c.nombre
-						, c.direccion
-						, c.foto 
-						, avg(e.val_profe) as prom_val_profe
-				  		From colegio c
-						LEFT JOIN estrellas e  
-						on c.id_colegio = e.id_colegio 
-						where val_profe <= '$val_profe'";*/
-		if ($val_profe) {
-			if ( $band==0) {
-				$query = $query."WHERE  (select avg(val_profe) from estrellas) <='$val_profe' ";
-			 	$band = 1;
-			 }elseif( $band== 1){
-			 	$query = $query."and   (select avg(val_profe) from estrellas) <='$val_profe' ";
-			 }	
-		}
-
-		if ($val_ense) {
-			if ($band==0) {
-				$query = $query."WHERE (select avg(val_ense) from estrellas) <='$val_ense' ";
-			 	$band = 1;
-			 }elseif( $band== 1){
-			 	$query = $query."and  (select avg(val_ense) from estrellas) <='$val_ense' ";
-			 }	
-		}
+		
 		
 
-		$query = $query."group by a.id_colegio order by prom_val_profe DESC";
+		
 
 		$query = $this->db->query($query);
 		return $query->result();		
 	}
+
+	function get_megusta_from_recomendation(){
+		$query = "SELECT id_colegio
+						, count(id_colegio) as cont 
+						FROM me_gusta 
+						group by id_colegio";
+
+		$query = $this->db->query($query);
+		return $query->result();
+	}
+
 	function get_megusta()
 	{
 		$query = $this->db->query(

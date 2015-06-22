@@ -15,7 +15,7 @@
 			<table class="table table-hover">
 		  		<tr>
 		  			<td>
-		  				<input  type="checkbox" name="option1" value="val_profe">Calidad de profesores  
+		  				Calidad de profesores  
 		  			</td>
 		  			<td>
 		  				 
@@ -38,7 +38,7 @@
 		  		</tr>
 		  		<tr>
 		  			<td>
-		  				<input type="checkbox" name="option1" value="val_profe">Calidad de enseñanza 
+		  				Calidad de enseñanza 
 		  			</td>
 		  			<td>
 		  				<span class="starRating">
@@ -60,7 +60,7 @@
 		  		</tr>
 		  		<tr>
 		  			<td>
-		  				<input type="checkbox" name="option3" value="val_infra">Infraestructura 
+		  				Infraestructura 
 		  			</td>
 		  			<td>
 		  				<span class="starRating">
@@ -72,7 +72,7 @@
                       <label for="val_infra3">3</label>
                       <input id="val_infra2" type="radio" name="val_infra" value="2">
                       <label for="val_infra2">2</label>
-                      <input id="val_infra1" type="radio" name="val_infra" value="1">
+                      <input id="val_infra1" type="radio" name="val_infra" value="1"> 
                       <label for="val_infra1">1</label>
                     </span>
 		  			</td>
@@ -82,7 +82,7 @@
 		  		</tr>
 		  		<tr>
 		  			<td>
-		  				<input type="checkbox" name="option4" value="val_ubi"> Ubicacion
+		  				Ubicacion
 		  			</td>
 		  			<td>
 		  				<span class="starRating">
