@@ -314,7 +314,7 @@
         	    </div>
         	    <div id="collapse<?= $colegio->id_colegio  ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<?= $colegio->id_colegio  ?>">
         	      <div class="panel-body">
-        	      <select style="visibility:hidden"  name="colegio" class="form-control" id="<?= $colegio->id_colegio ?>"> <!-- son dos select y tienen el mismo id -->
+        	      <select style="visibility:hidden"  name="colegio" class="form-control" id="colegio"> <!-- son dos select y tienen el mismo id -->
 
         	                    <option value="<?= $colegio->id_colegio ?>"><?= $colegio->nombre ?></option>
                   </select> 

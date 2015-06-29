@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-06-2015 a las 08:05:00
+-- Tiempo de generación: 29-06-2015 a las 08:07:38
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.6.3
 
@@ -196,7 +196,7 @@ CREATE TABLE IF NOT EXISTS `estrellas` (
   `comentario` varchar(250) NOT NULL,
   `perfil` varchar(100) NOT NULL,
   `terminos` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `estrellas`
@@ -204,7 +204,9 @@ CREATE TABLE IF NOT EXISTS `estrellas` (
 
 INSERT INTO `estrellas` (`id_comentario`, `id_colegio`, `val_profe`, `val_ense`, `val_infra`, `val_ubi`, `val_promedio`, `nombre`, `comentario`, `perfil`, `terminos`) VALUES
 (52, 3, 5, 5, 5, 5, 5, 'Daniel', 'Hola', 'apoderado', 'acepto'),
-(53, 3, 1, 1, 1, 1, 1, 'asd', 'malo', 'apoderado', 'acepto');
+(53, 3, 3, 3, 3, 3, 3, 'asd', 'malo', 'apoderado', 'acepto'),
+(54, 15, 5, 5, 5, 5, 5, 'Pedro', 'asda', 'apoderado', 'acepto'),
+(55, 3, 1, 1, 4, 2, 2, 'Feña', 'hola', 'estudiante', 'acepto');
 
 -- --------------------------------------------------------
 
@@ -236,19 +238,20 @@ CREATE TABLE IF NOT EXISTS `me_gusta` (
 `id_me_gusta` int(11) NOT NULL,
   `ip_usuario` varchar(100) NOT NULL,
   `id_colegio` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `me_gusta`
 --
 
 INSERT INTO `me_gusta` (`id_me_gusta`, `ip_usuario`, `id_colegio`) VALUES
-(1, '1', 1),
-(2, '0', 1),
-(3, '0', 6),
-(4, '200.68.62.226', 4),
-(5, '::1', 1),
-(6, '::1', 17);
+(1, '1', 3),
+(2, '0', 15),
+(3, '0', 3),
+(4, '200.68.62.226', 15),
+(5, '::1', 3),
+(6, '::1', 15),
+(7, '123', 3);
 
 -- --------------------------------------------------------
 
@@ -383,6 +386,18 @@ INSERT INTO `psu` (`anio`, `id_colegio`, `lenguaje_promedio`, `lenguaje_maximo`,
 (2013, 17, 635, 806, 521, 657, 785, 485, 646),
 (2013, 18, 611, 780, 397, 603, 818, 391, 607),
 (2013, 19, 522, 605, 389, 552, 715, 448, 537);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `quitiles`
+--
+
+CREATE TABLE IF NOT EXISTS `quitiles` (
+  `quintil` int(11) NOT NULL,
+  `desde` int(11) NOT NULL,
+  `hasta` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -803,7 +818,7 @@ MODIFY `id_dependencia` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT de la tabla `estrellas`
 --
 ALTER TABLE `estrellas`
-MODIFY `id_comentario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=54;
+MODIFY `id_comentario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=56;
 --
 -- AUTO_INCREMENT de la tabla `idioma`
 --
@@ -813,7 +828,7 @@ MODIFY `id_idioma` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT de la tabla `me_gusta`
 --
 ALTER TABLE `me_gusta`
-MODIFY `id_me_gusta` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `id_me_gusta` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT de la tabla `provincia`
 --
