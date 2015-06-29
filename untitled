@@ -1,0 +1,1 @@
+ <a href="<?= base_url('colegio/show?colegio='.$colegio->id_colegio) ?>" target="_blank" class="btn btn-danger" id="informacion">Ver Información</a>

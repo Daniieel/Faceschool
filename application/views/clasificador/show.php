@@ -341,50 +341,31 @@
 	</div>
 	</form>
 	<div class="col-md-7 ">
+    <?php foreach ($colegios as $colegio ) {?>
+      <div class="col-md-12 well">
+  				
+  				<ul class="list-group" >
+            <li class="list-group-item media">
+                  <div class="col-md-8">
+                      <figure class="pull-left">
+                          <img class="media-object img-rounded img-responsive" width="100" src='<?= $colegio->foto ?>' alt="placehold.it/150x150" >
+                      </figure>
+                  </div>
+                  <div class="col-md-6">
+                      <h4 class="list-group-item-heading"><?= $colegio->nombre  ?> </h4>
+                      <p class="list-group-item-text"><?= $colegio->direccion  ?> </p>
+                      
+                  </div>
+                  <div class="col-md-3 pull-right">
 
-		
+                  	<h2><?= $colegio->suma_total ?> <small> total </small></h2>
 
-		
-		<?php foreach ($colegios as $colegio ) {?>
-		<form action= "<?= base_url('colegio/show'); ?>" method="get" target="_blank" >	
-
-		
-		 
-
-		<div class="well">
-				
-				<div class="list-group" >
-			          <a href="#" class="list-group-item">
-			                <div class="media col-md-8">
-			                    <figure class="pull-left">
-			                        <img class="media-object img-rounded img-responsive" width="100" src='<?= $colegio->foto ?>' alt="placehold.it/150x150" >
-			                    </figure>
-			                </div>
-			                <div class="col-md-6">
-			                    <h4 class="list-group-item-heading"><?= $colegio->nombre  ?> </h4>
-			                    <p class="list-group-item-text"><?= $colegio->direccion  ?> </p>
-			                    
-			                </div>
-			                <div class="col-md-3 pull-right">
-
-			                	<h2><?= $colegio->suma_total ?> <small> total </small></h2>
-
-										                    
-			                     <input type="hidden" name= "colegio" value='<?= $colegio->id_colegio ?>'></input>
-			                     <input type="submit" value="Ver Informacion" class="btn btn-danger" id="informacion">
-			                    	                    
-			                   
-			                </div>
-			          </a>
-			          
-			        </div>
-		</div>
-		
-		
-		<?php } ?>
+                       <a href="<?= base_url('colegio/show?colegio='.$colegio->id_colegio) ?>" target="_blank" class="btn btn-danger" id="informacion">Ver Información</a>                                        
+                  </div>
+            </li>
+          </ul>
+       </div>
+  	<?php } ?>
 	</div>
-	
 	<br>
-	
-	</form>
 </div>
