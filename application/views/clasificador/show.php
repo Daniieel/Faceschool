@@ -63,12 +63,25 @@
              travelMode: google.maps.TravelMode.DRIVING
          };
          directionsService.route(request, function(response, status) {
-           if (status == google.maps.DirectionsStatus.OK) {
-             directionsDisplay.setDirections(response);
-           }
-         });
-         directionsDisplay.setMap(map);
-         directionsDisplay.setPanel(document.getElementById("directionsPanel"));
+          if (status == google.maps.DirectionsStatus.OK) {
+              directionsDisplay.setMap(map);
+              directionsDisplay.setPanel($("#directions_panel").get(0));
+              directionsDisplay.setDirections(response);
+              var summaryPanel = ($("#distance_panel").get(0));
+        summaryPanel.innerHTML = '';
+              for (var j = 0; j < response.routes.length; j++){
+                var route = response.routes[j];
+                console.log(response.routes[j]);
+          var routeSegment = j + 1;
+          summaryPanel.innerHTML += '<b>Ruta ' + routeSegment + ': ';
+          summaryPanel.innerHTML += route.legs[0].distance.text;
+          summaryPanel.innerHTML += ' (' + route.legs[0].distance.value + 'm)<br><br>';
+              }
+          } else {
+              alert("There is no directions available between these two points");
+          }
+      });
+
       }
 
       function geoOK(position) {
@@ -315,11 +328,11 @@
         	    <div id="collapse<?= $colegio->id_colegio  ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<?= $colegio->id_colegio  ?>">
         	      <div class="panel-body">
         	      <select style="visibility:hidden"  name="colegio" class="form-control" id="colegio"> <!-- son dos select y tienen el mismo id -->
-
-        	                    <option value="<?= $colegio->id_colegio ?>"><?= $colegio->nombre ?></option>
-                  </select> 
+                   <option value="<?= $colegio->id_colegio ?>"><?= $colegio->nombre ?></option>
+                </select> 
         	      </div>
         	      <div class="form-group">
+                   <!--  <div id="distance_panel" style="width: 100%; height: 20%;"></div> -->
         	          <div id="directionsPanel" style="width: 100%;float:right;"></div>
         	      </div>
         	      </div>
