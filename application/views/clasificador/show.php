@@ -49,10 +49,10 @@
       google.maps.event.addDomListener(window, 'load', initialize);
 
       //---------------
-      function calcular_ruta(){
+      function calcular_ruta(id_colegio){
       var end = "";
       colegios.forEach(function(cole){
-        if (cole.id == parseInt($('#colegio').val())) {
+        if (cole.id == parseInt(id_colegio)) {
           end = cole.latitud+","+cole.longitud;
         };
       });
@@ -320,20 +320,15 @@
         	    <div class="panel-heading" role="tab" id="heading<?= $colegio->id_colegio  ?>">
         	      <h4 class="panel-title">
 
-        	        <a onclick="calcular_ruta();" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<?= $colegio->id_colegio  ?>" aria-expanded="true" aria-controls="collapse<?= $colegio->id_colegio  ?>">
+        	        <a onclick="calcular_ruta('<?= $colegio->id_colegio ?>');" id="recorrido_colegio" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<?= $colegio->id_colegio  ?>" aria-expanded="true" aria-controls="collapse<?= $colegio->id_colegio  ?>">
         	          <?= $colegio->nombre  ?>
         	        </a>
         	      </h4>
         	    </div>
         	    <div id="collapse<?= $colegio->id_colegio  ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<?= $colegio->id_colegio  ?>">
-        	      <div class="panel-body">
-        	      <select style="visibility:hidden"  name="colegio" class="form-control" id="colegio"> <!-- son dos select y tienen el mismo id -->
-                   <option value="<?= $colegio->id_colegio ?>"><?= $colegio->nombre ?></option>
-                </select> 
-        	      </div>
         	      <div class="form-group">
-                   <!--  <div id="distance_panel" style="width: 100%; height: 20%;"></div> -->
-        	          <div id="directionsPanel" style="width: 100%;float:right;"></div>
+                    <div id="distance_panel" style="width: 100%; height: 20%;"></div>
+        	         <!--  <div id="directionsPanel" style="width: 100%;float:right;"></div> -->
         	      </div>
         	      </div>
         	    </div>
