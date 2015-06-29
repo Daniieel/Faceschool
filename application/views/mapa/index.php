@@ -359,14 +359,14 @@
                   </select>
                </div>
                <div class="form-group">
-                  <label><h5 style="color:black;">Mensualidad:</h5></label>
+                  <label><h5 style="color:black;">Quintiles:</h5></label>
                   <select name= "mensualidad" class= "form-control" id="mensualidad">
                     <option value="Todos,Todos">Todos</option>
-                    <option value="0,0">Gratuito</option>
-                    <option value="1,50000">Entre $1 y $50.000 </option>
-                    <option value="50001,100000">Entre $50.001 y $100.000 </option>
-                    <option value="100001,200000">Entre $100.001 y $200.000 </option>
-                    <option value="200001,300000">Entre $200.001 y $300.000 </option>
+                    <option value="0,74969">1</option>
+                    <option value="74970,125558">2 </option>
+                    <option value="125559,193104">3 </option>
+                    <option value="193105,352743">4 </option>
+                    <option value="352744,30000000">5 </option>
                     
 
                   </select>

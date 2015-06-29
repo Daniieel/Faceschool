@@ -113,7 +113,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		        <li><a href="<?= base_url() ?>">Inicio</a></li>
 		        <li><a href="<?= base_url() ?>mapa">Colegios Cercanos</a></li>
 		        <li><a href="<?= base_url() ?>puntuacion">Calificar Colegios</a></li>
-		        <li><a href="<?= base_url() ?>recomendador">Recomendador</a></li>
+		        <li><a href="<?= base_url() ?>clasificador">Clasificador</a></li>
 		        <!--<li><a href="<?= base_url() ?>informacion">Informacion</a></li>-->
 		        <!--<li><a href="<?= base_url() ?>libro_clases">Libro de Clases</a></li>-->
 		        <li><a href="<?= base_url() ?>contacto">Cont&aacute;ctanos</a></li>

@@ -2,7 +2,7 @@
 /**
 * 
 */
-class Recomendador  extends CI_Controller
+class Clasificador  extends CI_Controller
 {
 	
 	function __construct()
@@ -20,7 +20,7 @@ class Recomendador  extends CI_Controller
 		
 
 		$this->load->view('layouts/header',$this->dato);
-		$this->load->view('recomendador/index',$dato);
+		$this->load->view('clasificador/index',$dato);
 		$this->load->view('layouts/footer');
 
 	}
@@ -47,7 +47,7 @@ class Recomendador  extends CI_Controller
 		
 
 		$this->load->view('layouts/header',$this->dato);
-		$this->load->view('recomendador/show',$dato);
+		$this->load->view('clasificador/show',$dato);
 		$this->load->view('layouts/footer');
 
 	}
@@ -80,7 +80,7 @@ class Recomendador  extends CI_Controller
 		
 
 		$this->load->view('layouts/header',$this->dato);
-		$this->load->view('recomendador/show',$dato);
+		$this->load->view('clasificador/show',$dato);
 		$this->load->view('layouts/footer');
 
 	}

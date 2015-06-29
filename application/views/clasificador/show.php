@@ -207,7 +207,7 @@
       </script>
 
 <div class="col-md-4 col-md-offset-1">
-	<form action= "<?= base_url('recomendador/show_2'); ?>" method="get" >
+	<form action= "<?= base_url('clasificador/show_2'); ?>" method="get" >
 	<br>
 	<h2>Selecciona los criterios </h2>
 	<h4>
@@ -314,7 +314,7 @@
         	    </div>
         	    <div id="collapse<?= $colegio->id_colegio  ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<?= $colegio->id_colegio  ?>">
         	      <div class="panel-body">
-        	      <select  style="visibility:hidden" name="colegio" class="form-control" id="colegio">
+        	      <select style="visibility:hidden"  name="colegio" class="form-control" id="<?= $colegio->id_colegio ?>"> <!-- son dos select y tienen el mismo id -->
 
         	                    <option value="<?= $colegio->id_colegio ?>"><?= $colegio->nombre ?></option>
                   </select> 

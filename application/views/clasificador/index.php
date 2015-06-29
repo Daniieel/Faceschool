@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="<?= base_url(); ?>css/stylesheet.css">
 
 <div class="col-md-10 col-md-offset-1">
-	<form action= "<?= base_url('recomendador/show'); ?>" method="get" target="_blank" >
+	<form action= "<?= base_url('clasificador/show_2'); ?>" method="get" target="_blank" >
 	<br>
 	<h2>Selecciona los criterios </h2>
 	<h4>
