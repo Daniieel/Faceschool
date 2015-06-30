@@ -1,37 +1,29 @@
 <div class="slider_bg"><!-- start slider -->
 		<div class="container">
-		<div id="da-slider" class="da-slider text-center">
-			<div class="da-slide">
-				<h2>FaceSchool</h2>
-				<p><strong>Encuentra t&uacute; mejor opci&oacute;n de Colegio.</strong></p>
-				<h3 class="da-link">
-				<form action= "<?= base_url('puntuacion/show'); ?>" method="get" target="_blank" >
-					<div class="col-md-5 h_search">
-						
-						        <label><h4>Selecciona el colegio:</h4></label>
-						        <!-- se llena el combobox con los colegios con la posicion de la base de datos y hace la funcion "como llegar"--> 
-						        <select name="colegio" class="form-control" id="colegio">
+				<div id="da-slider" class="da-slider text-center">
+					<div class="da-slide">
+						<h2>FaceSchool</h2>
+						<p><strong>Busca tu colegio preferido.</strong></p>
+						<h3 class="da-link">
+							<div class="col-md-10 h_search">
+								<form action= "<?= base_url('puntuacion/show'); ?>" method="get" target="_blank">
+									<input style=" border: 1px solid black;" type="text" class="text" value="Escribe aqui" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Busca un colegio';}" list="colegios" name="colegio">
+									<datalist id="colegios">
+									<?php foreach ($colegios as $colegio) {
+									?>
+									   <option value="<?= $colegio->nombre ?>"></option>
 
-						              <option value="">Selecciona un colegio</option>
-						              <?php foreach ($colegios as $colegio) {
-						              ?>
-
-						              <option value="<?= $colegio->id_colegio ?>"><?= $colegio->nombre ?></option>
-
-						              <?php }
-
-						               ?> 
-
-						           </select>
-						           <div class="form-group">
-						             <input type="submit" value="Califica el colegio" class="btn btn-danger" id="informacion">
-						           </div>
-						      
+									<?php } ?>
+									</datalist>
+									<input type="submit" value="Buscar">
+								</form>
+							</div>
 					</div>
-					
+			   </div>
 			</div>
-	   </div>
-	</div>
+
+
+	
 </div><!-- end slider -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <div class="main_bg"><!-- start main -->

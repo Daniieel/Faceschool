@@ -73,12 +73,12 @@
                 var route = response.routes[j];
                 console.log(response.routes[j]);
           var routeSegment = j + 1;
-          summaryPanel.innerHTML += '<b>Ruta ' + routeSegment + ': ';
+          summaryPanel.innerHTML += '<b>Distancia : ';
           summaryPanel.innerHTML += route.legs[0].distance.text;
           summaryPanel.innerHTML += ' (' + route.legs[0].distance.value + 'm)<br><br>';
               }
           } else {
-              alert("There is no directions available between these two points");
+              alert("Esta distancia no esta disponible");
           }
       });
 
@@ -313,27 +313,8 @@
 
 			
 			<div id="mapa" style="width:100%; height:470px; border: 2px solid black;  position: center; overflow: hidden"></div>
+      <div id="distance_panel" style="width: 100%; height: 20%;"></div> 	
         	
-        	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-        	  <div class="panel panel-default">
-        	  <?php foreach ($colegios as $colegio ) {?>
-        	    <div class="panel-heading" role="tab" id="heading<?= $colegio->id_colegio  ?>">
-        	      <h4 class="panel-title">
-
-        	        <a onclick="calcular_ruta('<?= $colegio->id_colegio ?>');" id="recorrido_colegio" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<?= $colegio->id_colegio  ?>" aria-expanded="true" aria-controls="collapse<?= $colegio->id_colegio  ?>">
-        	          <?= $colegio->nombre  ?>
-        	        </a>
-        	      </h4>
-        	    </div>
-        	    <div id="collapse<?= $colegio->id_colegio  ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<?= $colegio->id_colegio  ?>">
-        	      <div class="form-group">
-                    <div id="distance_panel" style="width: 100%; height: 20%;"></div>
-        	         <!--  <div id="directionsPanel" style="width: 100%;float:right;"></div> -->
-        	      </div>
-        	      </div>
-        	    </div>
-        	   <?php } ?>
-        	  </div>
         	   
         	</div>
         	</div>
@@ -358,10 +339,14 @@
                   </div>
                   <div class="col-md-3 pull-right">
 
-                  	<h2><?= $colegio->suma_total ?> <small> total </small></h2>
+                  	<h2><?= $colegio->suma_total ?> <small> Total </small></h2>
 
-                       <a href="<?= base_url('colegio/show?colegio='.$colegio->id_colegio) ?>" target="_blank" class="btn btn-danger" id="informacion">Ver Información</a>                                        
+                       <a href="<?= base_url('colegio/show?colegio='.$colegio->id_colegio) ?>" target="_blank" class="btn btn-danger" id="informacion">Ver Información</a>
+
+                       <a onclick="calcular_ruta('<?= $colegio->id_colegio ?>');" class="btn btn-danger" id="informacion">Como llegar</a>                                      
                   </div>
+
+
             </li>
           </ul>
        </div>

@@ -364,8 +364,11 @@
 
 				
 				</table>			
-
-
+				<div class="col-sm-10">
+				<h5><p>*Tu opinion nos interesa</p></h5>
+				<a href="<?= base_url('puntuacion/show?colegio='.$colegio->id_colegio) ?>" target="_blank" class="btn btn-danger" id="informacion">Califica este colegio!</a>
+				
+				</div>
 			<!-- -->
 		<?php if ($like == FALSE): ?>
 				<form action="<?= base_url('colegio/agregar_me_gusta')  ?>" method="post">
@@ -383,9 +386,11 @@
 				<button type="submit" class="btn btn-primary">Me Gusta</button>
 			</form>
 		<?php else:?>
+			<div class="col-sm-10">
 			<h5 class="lead text-info">Ya le has hecho me gusta	</h5>
+			</div>
 		<?php endif ?>
-			<input id="rating-input" type="number" />
+				
     		<div class="fb-comments" data-href="http://faceschool.cl/colegio/show?colegio=<?= $colegio->id_colegio ?>" data-numposts="5" data-colorscheme="light"></div>
 			<div class="fb-like" data-href="http://faceschool.cl/colegio/show?colegio=<?= $colegio->id_colegio ?>" data-layout="standard" data-action="recommend" data-show-faces="true" data-share="true"></div>
 		</div>
