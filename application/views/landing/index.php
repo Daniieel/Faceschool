@@ -11,7 +11,7 @@
 									<datalist id="colegios">
 									<?php foreach ($colegios as $colegio) {
 									?>
-									   <option value="<?= $colegio->nombre ?>"></option>
+									   <option value="<?= $colegio->id_colegio ?>" label="<?= $colegio->nombre ?>"></option>
 
 									<?php } ?>
 									</datalist>
