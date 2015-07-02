@@ -6,7 +6,7 @@
 						<p><strong>Busca tu colegio preferido.</strong></p>
 						<h3 class="da-link">
 							<div class="col-md-10 h_search">
-								<form action= "<?= base_url('puntuacion/show'); ?>" method="get" target="_blank">
+								<form action= "<?= base_url('colegio/show'); ?>" method="get" target="_blank">
 									<input style=" border: 1px solid black;" type="text" class="text" value="Escribe aqui" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Busca un colegio';}" list="colegios" name="colegio">
 									<datalist id="colegios">
 									<?php foreach ($colegios as $colegio) {
