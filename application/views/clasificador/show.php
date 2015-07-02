@@ -93,7 +93,7 @@
           colegios.forEach(function(cole){
             
               end = cole.latitud+","+cole.longitud;
-              calcular_ruta(cole.id_colegio);
+            
           });
            var start = myPos;
              var request = {
@@ -115,7 +115,7 @@
               summaryPanel.innerHTML += '<b>Distancia : ';
               summaryPanel.innerHTML += route.legs[0].distance.text +'<br>';
               summaryPanel.innerHTML += '<b>Distancia : ';
-              summaryPanel.innerHTML += route.legs[2].distance.text +'<br>';
+              summaryPanel.innerHTML += route.legs[0].distance.text +'<br>';
               summaryPanel.innerHTML += '<b>Distancia : ';
               summaryPanel.innerHTML += route.legs[0].distance.text;
                 
@@ -124,6 +124,43 @@
                   alert("Esta distancia no esta disponible");
               }
           });
+
+          var end = "";
+          colegios.forEach(function(cole){
+            
+              end = cole.latitud+","+cole.longitud;
+            
+          });
+           var start = myPos;
+             var request = {
+                 origin:start,
+                 destination:end,
+                 travelMode: google.maps.TravelMode.DRIVING
+             };
+             directionsService.route(request, function(response, status) {
+              if (status == google.maps.DirectionsStatus.OK) {
+                  //directionsDisplay.setMap(map);
+                  directionsDisplay.setPanel($("#directions_panel").get(0));
+                  directionsDisplay.setDirections(response);
+                  var summaryPanel = ($("#distance_panel").get(0));
+            summaryPanel.innerHTML = '';
+                  for (var j = 0; j < response.routes.length; j++){
+                    var route = response.routes[j];
+                    console.log(response.routes[j]);
+              var routeSegment = j + 1;
+              summaryPanel.innerHTML += '<b>Distancia : ';
+              summaryPanel.innerHTML += route.legs[0].distance.text +'<br>';
+              summaryPanel.innerHTML += '<b>Distancia : ';
+              summaryPanel.innerHTML += route.legs[0].distance.text +'<br>';
+              summaryPanel.innerHTML += '<b>Distancia : ';
+              summaryPanel.innerHTML += route.legs[0].distance.text;
+                
+                  }
+              } else {
+                  alert("Esta distancia no esta disponible");
+              }
+          });
+            
             
 
 
