@@ -68,14 +68,14 @@
               directionsDisplay.setPanel($("#directions_panel").get(0));
               directionsDisplay.setDirections(response);
               var summaryPanel = ($("#distance_panel").get(0));
-        summaryPanel.innerHTML = '';
+              summaryPanel.innerHTML = '';
               for (var j = 0; j < response.routes.length; j++){
                 var route = response.routes[j];
-                console.log(response.routes[j]);
-          var routeSegment = j + 1;
-          summaryPanel.innerHTML += '<b>Distancia : ';
-          summaryPanel.innerHTML += route.legs[0].distance.text;
-          summaryPanel.innerHTML += ' (' + route.legs[0].distance.value + 'm)<br><br>';
+                var routeSegment = j + 1;
+                summaryPanel.innerHTML += '<b>Distancia : ';
+                summaryPanel.innerHTML += route.legs[0].distance.text;
+                summaryPanel.innerHTML += ' (' + route.legs[0].distance.value + 'm)<br><br>';
+                $('#colegio_'+id_colegio).val(route.legs[0].distance.text)
               }
           } else {
               alert("Esta distancia no esta disponible");
@@ -90,87 +90,24 @@
           function calcular_rutas(){
            
           var end = "";
+          var summaryPanel = ($("#distance_panel2").get(0));
+          summaryPanel.innerHTML = '';
           colegios.forEach(function(cole){
-            
               end = cole.latitud+","+cole.longitud;
-            
+              calcular_ruta(cole.id);
+              summaryPanel.innerHTML += '<b>Distancia Colegio('+cole.id+'): ';
+              summaryPanel.innerHTML += $('#colegio_'+cole.id).val()+'<br><br>';    
+             
           });
-           var start = myPos;
-             var request = {
-                 origin:start,
-                 destination:end,
-                 travelMode: google.maps.TravelMode.DRIVING
-             };
-             directionsService.route(request, function(response, status) {
-              if (status == google.maps.DirectionsStatus.OK) {
-                  //directionsDisplay.setMap(map);
-                  directionsDisplay.setPanel($("#directions_panel").get(0));
-                  directionsDisplay.setDirections(response);
-                  var summaryPanel = ($("#distance_panel").get(0));
-            summaryPanel.innerHTML = '';
-                  for (var j = 0; j < response.routes.length; j++){
-                    var route = response.routes[j];
-                    console.log(response.routes[j]);
-              var routeSegment = j + 1;
-              summaryPanel.innerHTML += '<b>Distancia : ';
-              summaryPanel.innerHTML += route.legs[0].distance.text +'<br>';
-              summaryPanel.innerHTML += '<b>Distancia : ';
-              summaryPanel.innerHTML += route.legs[0].distance.text +'<br>';
-              summaryPanel.innerHTML += '<b>Distancia : ';
-              summaryPanel.innerHTML += route.legs[0].distance.text;
-                
-                  }
-              } else {
-                  alert("Esta distancia no esta disponible");
-              }
-          });
-
-          var end = "";
-          colegios.forEach(function(cole){
-            
-              end = cole.latitud+","+cole.longitud;
-            
-          });
-           var start = myPos;
-             var request = {
-                 origin:start,
-                 destination:end,
-                 travelMode: google.maps.TravelMode.DRIVING
-             };
-             directionsService.route(request, function(response, status) {
-              if (status == google.maps.DirectionsStatus.OK) {
-                  //directionsDisplay.setMap(map);
-                  directionsDisplay.setPanel($("#directions_panel").get(0));
-                  directionsDisplay.setDirections(response);
-                  var summaryPanel = ($("#distance_panel").get(0));
-            summaryPanel.innerHTML = '';
-                  for (var j = 0; j < response.routes.length; j++){
-                    var route = response.routes[j];
-                    console.log(response.routes[j]);
-              var routeSegment = j + 1;
-              summaryPanel.innerHTML += '<b>Distancia : ';
-              summaryPanel.innerHTML += route.legs[0].distance.text +'<br>';
-              summaryPanel.innerHTML += '<b>Distancia : ';
-              summaryPanel.innerHTML += route.legs[0].distance.text +'<br>';
-              summaryPanel.innerHTML += '<b>Distancia : ';
-              summaryPanel.innerHTML += route.legs[0].distance.text;
-                
-                  }
-              } else {
-                  alert("Esta distancia no esta disponible");
-              }
-          });
-            
-            
-
-
+           var summaryPanel = ($("#distance_panel").get(0));
+          summaryPanel.innerHTML = '';
           }
 
 
 
 //----- fin intento
 
-
+  
 
 
       function geoOK(position) {
@@ -303,7 +240,7 @@
       function procesaClick() {
           alert("Marcador: " + this.title + ", ID: " + this.idColegio);
       }
-
+      
 
 
       </script>
@@ -403,6 +340,7 @@
 			
 			<div id="mapa" style="width:100%; height:470px; border: 2px solid black;  position: center; overflow: hidden"></div>
       <div id="distance_panel" style="width: 100%; height: 20%;"></div> 	
+      <div id="distance_panel2"></div>
       <a onclick="calcular_rutas();" class="btn btn-danger" id="informacion">Como llegar</a>	
         	   
         	</div>
@@ -424,6 +362,7 @@
                   <div class="col-md-6">
                       <h4 class="list-group-item-heading"><?= $colegio->nombre  ?> </h4>
                       <p class="list-group-item-text"><?= $colegio->direccion  ?> </p>
+                      <input type="text" id="colegio_<?= $colegio->id_colegio ?>">
                       
                   </div>
                   <div class="col-md-3 pull-right">
