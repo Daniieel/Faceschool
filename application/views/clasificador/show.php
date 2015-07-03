@@ -67,15 +67,15 @@
               directionsDisplay.setMap(map);
               directionsDisplay.setPanel($("#directions_panel").get(0));
               directionsDisplay.setDirections(response);
-              var summaryPanel = ($("#distance_panel").get(0));
-        summaryPanel.innerHTML = '';
+              //var summaryPanel = ($("#distance_panel").get(0));
+              summaryPanel.innerHTML = '';
               for (var j = 0; j < response.routes.length; j++){
                 var route = response.routes[j];
-                console.log(response.routes[j]);
-          var routeSegment = j + 1;
-          summaryPanel.innerHTML += '<b>Distancia : ';
-          summaryPanel.innerHTML += route.legs[0].distance.text;
-          summaryPanel.innerHTML += ' (' + route.legs[0].distance.value + 'm)<br><br>';
+                var routeSegment = j + 1;
+                summaryPanel.innerHTML += '<b>Distancia : ';
+                summaryPanel.innerHTML += route.legs[0].distance.text;
+                summaryPanel.innerHTML += ' (' + route.legs[0].distance.value + 'm)<br><br>';
+                $('#colegio_'+id_colegio).val(route.legs[0].distance.text)
               }
           } else {
               alert("Esta distancia no esta disponible");
@@ -85,92 +85,64 @@
       }
 
 //---------- intento
+
+          function calcular_ruta_sin_mapa(id_colegio){
+          var end = "";
+          colegios.forEach(function(cole){
+            if (cole.id == parseInt(id_colegio)) {
+              end = cole.latitud+","+cole.longitud;
+            };
+          });
+           var start = myPos;
+             var request = {
+                 origin:start,
+                 destination:end,
+                 travelMode: google.maps.TravelMode.DRIVING
+             };
+             directionsService.route(request, function(response, status) {
+              if (status == google.maps.DirectionsStatus.OK) {
+                 // directionsDisplay.setMap(map);
+                  directionsDisplay.setPanel($("#directions_panel").get(0));
+                  directionsDisplay.setDirections(response);
+                  var summaryPanel = ($("#distance_panel").get(0));
+                  summaryPanel.innerHTML = '';
+                  for (var j = 0; j < response.routes.length; j++){
+                    var route = response.routes[j];
+                    var routeSegment = j + 1;
+                    //summaryPanel.innerHTML += '<b>Distancia : ';
+                    //summaryPanel.innerHTML += route.legs[0].distance.text;
+                    summaryPanel.innerHTML += '';
+                    $('#colegio_'+id_colegio).val(route.legs[0].distance.text)
+                  }
+              } else {
+                  alert("Esta distancia no esta disponible");
+              }
+          });
+
+          }
       
 
           function calcular_rutas(){
            
           var end = "";
+          var summaryPanel = ($("#distance_panel2").get(0));
+          summaryPanel.innerHTML = '';
           colegios.forEach(function(cole){
-            
               end = cole.latitud+","+cole.longitud;
-            
+              calcular_ruta_sin_mapa(cole.id);
+             // summaryPanel.innerHTML += '<b>Distancia Colegio('+cole.id+'): ';
+              //summaryPanel.innerHTML += $('#colegio_'+cole.id).val()+'<br><br>';    
+             
           });
-           var start = myPos;
-             var request = {
-                 origin:start,
-                 destination:end,
-                 travelMode: google.maps.TravelMode.DRIVING
-             };
-             directionsService.route(request, function(response, status) {
-              if (status == google.maps.DirectionsStatus.OK) {
-                  //directionsDisplay.setMap(map);
-                  directionsDisplay.setPanel($("#directions_panel").get(0));
-                  directionsDisplay.setDirections(response);
-                  var summaryPanel = ($("#distance_panel").get(0));
-            summaryPanel.innerHTML = '';
-                  for (var j = 0; j < response.routes.length; j++){
-                    var route = response.routes[j];
-                    console.log(response.routes[j]);
-              var routeSegment = j + 1;
-              summaryPanel.innerHTML += '<b>Distancia : ';
-              summaryPanel.innerHTML += route.legs[0].distance.text +'<br>';
-              summaryPanel.innerHTML += '<b>Distancia : ';
-              summaryPanel.innerHTML += route.legs[0].distance.text +'<br>';
-              summaryPanel.innerHTML += '<b>Distancia : ';
-              summaryPanel.innerHTML += route.legs[0].distance.text;
-                
-                  }
-              } else {
-                  alert("Esta distancia no esta disponible");
-              }
-          });
-
-          var end = "";
-          colegios.forEach(function(cole){
-            
-              end = cole.latitud+","+cole.longitud;
-            
-          });
-           var start = myPos;
-             var request = {
-                 origin:start,
-                 destination:end,
-                 travelMode: google.maps.TravelMode.DRIVING
-             };
-             directionsService.route(request, function(response, status) {
-              if (status == google.maps.DirectionsStatus.OK) {
-                  //directionsDisplay.setMap(map);
-                  directionsDisplay.setPanel($("#directions_panel").get(0));
-                  directionsDisplay.setDirections(response);
-                  var summaryPanel = ($("#distance_panel").get(0));
-            summaryPanel.innerHTML = '';
-                  for (var j = 0; j < response.routes.length; j++){
-                    var route = response.routes[j];
-                    console.log(response.routes[j]);
-              var routeSegment = j + 1;
-              summaryPanel.innerHTML += '<b>Distancia : ';
-              summaryPanel.innerHTML += route.legs[0].distance.text +'<br>';
-              summaryPanel.innerHTML += '<b>Distancia : ';
-              summaryPanel.innerHTML += route.legs[0].distance.text +'<br>';
-              summaryPanel.innerHTML += '<b>Distancia : ';
-              summaryPanel.innerHTML += route.legs[0].distance.text;
-                
-                  }
-              } else {
-                  alert("Esta distancia no esta disponible");
-              }
-          });
-            
-            
-
-
+           var summaryPanel = ($("#distance_panel").get(0));
+          summaryPanel.innerHTML = '';
           }
 
 
 
 //----- fin intento
 
-
+  
 
 
       function geoOK(position) {
@@ -241,14 +213,7 @@
       marker.setMap(map);
 
 
-      // Agregar circulo al mapa
-      circle = new google.maps.Circle({
-        map: map,
-        radius: 0,    // 10 miles in metres
-        fillColor: '#819FF7',
-        strokeColor: '#2E9AFE'
-      });
-      circle.bindTo('center', marker, 'position');
+     
 
       directionsRenderer = new google.maps.DirectionsRenderer();
       directionsRenderer.setMap(map);
@@ -303,7 +268,7 @@
       function procesaClick() {
           alert("Marcador: " + this.title + ", ID: " + this.idColegio);
       }
-
+      
 
 
       </script>
@@ -403,7 +368,8 @@
 			
 			<div id="mapa" style="width:100%; height:470px; border: 2px solid black;  position: center; overflow: hidden"></div>
       <div id="distance_panel" style="width: 100%; height: 20%;"></div> 	
-      <a onclick="calcular_rutas();" class="btn btn-danger" id="informacion">Como llegar</a>	
+      <div id="distance_panel2"></div>
+      <a onclick="calcular_rutas();" class="btn btn-danger" id="informacion">Ver distancias</a>	
         	   
         	</div>
         	</div>
@@ -424,6 +390,7 @@
                   <div class="col-md-6">
                       <h4 class="list-group-item-heading"><?= $colegio->nombre  ?> </h4>
                       <p class="list-group-item-text"><?= $colegio->direccion  ?> </p>
+                     <h4>Distancia: <input type="text" id="colegio_<?= $colegio->id_colegio ?>" disabled> </h4>
                       
                   </div>
                   <div class="col-md-3 pull-right">

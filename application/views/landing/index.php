@@ -11,11 +11,11 @@
 									<datalist id="colegios">
 									<?php foreach ($colegios as $colegio) {
 									?>
-									   <option value="<?= $colegio->id_colegio ?>" label="<?= $colegio->nombre ?>"></option>
+									  <!-- <option value="<?= $colegio->id_colegio ?>" label="<?= $colegio->nombre ?>"></option>-->
 
 									<?php } ?>
 									</datalist>
-									<input type="submit" value="Buscar">
+									<input type="submit" value="Buscar" disabled>
 								</form>
 							</div>
 					</div>
